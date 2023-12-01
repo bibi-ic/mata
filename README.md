@@ -1,2 +1,2 @@
-# simpleAPI
-a simple API for getting metadata from any url website
+# mata
+a simple API getting metadata from any URLs website
