@@ -5,12 +5,14 @@ import (
 	gourl "net/url"
 
 	"github.com/bibi-ic/mata/api"
+	db "github.com/bibi-ic/mata/db/sqlc"
 	"github.com/bibi-ic/mata/model"
 	"github.com/gin-gonic/gin"
 )
 
 type MataController struct {
-	Key string
+	Store db.Store
+	Key   string
 }
 
 // Retrieve result for MataController with link input
@@ -19,6 +21,12 @@ func (m MataController) Retrieve(c *gin.Context) {
 	_, err := gourl.ParseRequestURI(u)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, errorResponse(ErrInvalidLink))
+		return
+	}
+
+	m.Key, err = m.Store.GetAPITx(c)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 

@@ -10,8 +10,9 @@ func (s *Server) newRouter() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
-	mC := new(controller.MataController)
-	mC.Key = s.config.Iframely.Key
+	mC := &controller.MataController{
+		Store: s.store,
+	}
 	router.POST("/meta", mC.Retrieve)
 
 	s.router = router

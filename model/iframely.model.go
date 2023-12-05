@@ -3,6 +3,9 @@ package model
 import (
 	"encoding/json"
 	"regexp"
+	"strings"
+
+	"golang.org/x/net/html"
 )
 
 type Meta struct {
@@ -65,12 +68,17 @@ func (m *Meta) UnmarshalJSON(data []byte) error {
 		ThumbnailWidth:  mt.Link.Thumbnail[0].Media.Width,
 		ThumbnailHeight: mt.Link.Thumbnail[0].Media.Height,
 		HTML:            mt.HTML,
-		DataIframelyURL: true,
 	}
 
 	*m = *tmp
 	m.providerName()
 	m.youtubeID()
+
+	ok, err := m.htmlHasIframely()
+	if err != nil {
+		return err
+	}
+	m.DataIframelyURL = ok
 	return nil
 }
 
@@ -95,4 +103,31 @@ func (m *Meta) youtubeID() {
 	} else {
 		m.YouTubeID = match[1]
 	}
+}
+
+func (m *Meta) htmlHasIframely() (bool, error) {
+	root, err := html.Parse(strings.NewReader(m.HTML))
+	if err != nil {
+		return false, err
+	}
+
+	ok := elementHasID("data-iframely-url", root)
+	if !ok {
+		return false, nil
+	}
+	return true, nil
+}
+
+func elementHasID(id string, n *html.Node) bool {
+	for _, a := range n.Attr {
+		if a.Key == id {
+			return true
+		}
+	}
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		if ok := elementHasID(id, c); ok {
+			return true
+		}
+	}
+	return false
 }
