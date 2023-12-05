@@ -1,0 +1,12 @@
+-- SQL dump generated using DBML (dbml-lang.org)
+-- Database: PostgreSQL
+-- Generated at: 2023-12-04T11:39:45.457Z
+
+CREATE TABLE "apis" (
+  "id" bigserial PRIMARY KEY,
+  "key" varchar UNIQUE NOT NULL,
+  "usage_count" bigint NOT NULL DEFAULT 0,
+  "created_at" timestamptz NOT NULL DEFAULT (now())
+);
+
+COMMENT ON COLUMN "apis"."key" IS 'public keys from 3rd API';

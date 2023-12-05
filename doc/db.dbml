@@ -1,0 +1,13 @@
+Project mata {
+  database_type: 'PostgreSQL'
+  Note: '''
+    # Mata Database
+  '''
+}
+
+Table apis as A {
+  id bigserial [pk]
+  key varchar [unique, not null, note:'public keys from 3rd API']
+  usage_count bigint [default: 0,not null]
+  created_at timestamptz [default: `now()`, not null]
+}

@@ -2,27 +2,25 @@ package server
 
 import (
 	"github.com/bibi-ic/mata/config"
+	db "github.com/bibi-ic/mata/db/sqlc"
 	"github.com/gin-gonic/gin"
 )
 
 type Server struct {
 	config config.Config
+	store  db.Store
 	router *gin.Engine
 }
 
 // New Server HTTP
-func New() (*Server, error) {
-	c, err := config.Load()
-	if err != nil {
-		return nil, err
-	}
-
+func New(cfg config.Config, store db.Store) *Server {
 	s := &Server{
-		config: c,
+		config: cfg,
+		store:  store,
 	}
 
 	s.newRouter()
-	return s, err
+	return s
 }
 
 func (s *Server) Start() error {
