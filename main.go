@@ -9,6 +9,9 @@ import (
 	"github.com/bibi-ic/mata/db/seed"
 	db "github.com/bibi-ic/mata/db/sqlc"
 	"github.com/bibi-ic/mata/server"
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/redis/go-redis/v9"
 )
@@ -24,6 +27,8 @@ func main() {
 	if err != nil {
 		log.Fatal("cannot connect to db: ", err)
 	}
+
+	runDBMigration(c.MigrationURL, c.DB.Source)
 
 	// Insert Bulk Key API
 	count, err := seed.Key(connPool, c.Iframely.Key)
@@ -52,4 +57,17 @@ func main() {
 	if err != nil {
 		log.Fatal("can not run server: ", err)
 	}
+}
+
+func runDBMigration(migrationURL string, dbSource string) {
+	migration, err := migrate.New(migrationURL, dbSource)
+	if err != nil {
+		log.Fatal("cannot create new migrate instance: ", err)
+	}
+
+	if err = migration.Up(); err != nil && err != migrate.ErrNoChange {
+		log.Fatal("failed to run migrate up: ", err)
+	}
+
+	log.Println("db migrated successfully")
 }
