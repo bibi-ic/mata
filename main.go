@@ -4,11 +4,13 @@ import (
 	"context"
 	"log"
 
+	"github.com/bibi-ic/mata/cache"
 	"github.com/bibi-ic/mata/config"
 	"github.com/bibi-ic/mata/db/seed"
 	db "github.com/bibi-ic/mata/db/sqlc"
 	"github.com/bibi-ic/mata/server"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/redis/go-redis/v9"
 )
 
 func main() {
@@ -17,6 +19,7 @@ func main() {
 		log.Fatal("cannot load config: ", err)
 	}
 
+	// Init Database Connection Pool
 	connPool, err := pgxpool.New(context.Background(), c.DB.Source)
 	if err != nil {
 		log.Fatal("cannot connect to db: ", err)
@@ -30,8 +33,21 @@ func main() {
 		log.Printf("inserted %v keys", count)
 	}
 
+	//  Connect to cache server
+	opts, err := redis.ParseURL(c.Cache.Source)
+	if err != nil {
+		log.Fatal("cannot parse redis source: ", err)
+	}
+	rClient := redis.NewClient(opts)
+	_, err = rClient.Ping(context.Background()).Result()
+	if err != nil {
+		log.Fatal("cannot connect to redis: ", err)
+	}
+	defer rClient.Close()
+
+	cache := cache.New(rClient, c.Cache.Age)
 	store := db.NewStore(connPool)
-	s := server.New(c, store)
+	s := server.New(c, store, cache)
 	err = s.Start()
 	if err != nil {
 		log.Fatal("can not run server: ", err)

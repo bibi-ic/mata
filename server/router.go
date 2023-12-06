@@ -12,6 +12,7 @@ func (s *Server) newRouter() {
 
 	mC := &controller.MataController{
 		Store: s.store,
+		Cache: s.cache,
 	}
 	router.POST("/meta", mC.Retrieve)
 

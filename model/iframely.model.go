@@ -4,28 +4,29 @@ import (
 	"encoding/json"
 	"regexp"
 	"strings"
+	"time"
 
 	"golang.org/x/net/html"
 )
 
 type Meta struct {
-	URL             string `json:"url"`
-	Type            string `json:"type"`
-	Version         string `json:"version"`
-	Title           string `json:"title"`
-	Author          string `json:"author"`
-	ProviderName    string `json:"provider_name"`
-	Description     string `json:"description"`
-	YouTubeID       string `json:"youtube_video_id,omitempty"`
-	ThumbnailURL    string `json:"thumbnail_url"`
-	ThumbnailWidth  int    `json:"thumbnail_width"`
-	ThumbnailHeight int    `json:"thumbnail_height"`
-	HTML            string `json:"html"`
-	CacheAge        int64
-	DataIframelyURL bool `json:"data_iframely_url"`
+	URL             string        `json:"url"`
+	Type            string        `json:"type"`
+	Version         string        `json:"version"`
+	Title           string        `json:"title"`
+	Author          string        `json:"author"`
+	ProviderName    string        `json:"provider_name"`
+	Description     string        `json:"description"`
+	YouTubeID       string        `json:"youtube_video_id,omitempty"`
+	ThumbnailURL    string        `json:"thumbnail_url"`
+	ThumbnailWidth  int           `json:"thumbnail_width"`
+	ThumbnailHeight int           `json:"thumbnail_height"`
+	HTML            string        `json:"html"`
+	CacheAge        time.Duration `json:"cache_age"`
+	DataIframelyURL bool          `json:"data_iframely_url"`
 }
 
-func (m *Meta) UnmarshalJSON(data []byte) error {
+func (m *Meta) ParseJSON(data []byte) error {
 	type media struct {
 		Width  int `json:"width"`
 		Height int `json:"height"`
