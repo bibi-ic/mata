@@ -28,10 +28,11 @@ type Cache struct {
 
 // Config struct base from structure's config file
 type Config struct {
-	Server   HTTP  `mapstructure:"http"`
-	Iframely API   `mapstructure:"api"`
-	DB       DB    `mapstructure:"db"`
-	Cache    Cache `mapstructure:"cache"`
+	Server       HTTP   `mapstructure:"http"`
+	Iframely     API    `mapstructure:"api"`
+	DB           DB     `mapstructure:"db"`
+	MigrationURL string `mapstructure:"migration_url"`
+	Cache        Cache  `mapstructure:"cache"`
 }
 
 var (

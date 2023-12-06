@@ -12,3 +12,5 @@ db:
 cache:
   source: "redis://root:cachesc@localhost:9990/5?protocol=3"
   age: 3
+
+migration_url: file://db/migration
