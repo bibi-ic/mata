@@ -3,6 +3,7 @@ package config
 import (
 	"path/filepath"
 	"runtime"
+	"time"
 
 	"github.com/spf13/viper"
 )
@@ -20,11 +21,17 @@ type DB struct {
 	Source string `mapstructure:"source"`
 }
 
+type Cache struct {
+	Source string        `mapstructure:"source"`
+	Age    time.Duration `mapstructure:"age"`
+}
+
 // Config struct base from structure's config file
 type Config struct {
-	Server   HTTP `mapstructure:"http"`
-	Iframely API  `mapstructure:"api"`
-	DB       DB   `mapstructure:"db"`
+	Server   HTTP  `mapstructure:"http"`
+	Iframely API   `mapstructure:"api"`
+	DB       DB    `mapstructure:"db"`
+	Cache    Cache `mapstructure:"cache"`
 }
 
 var (

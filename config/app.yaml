@@ -9,3 +9,6 @@ api:
     - "key2"
 db:
   source: "postgresql://root:hiddensc@localhost:6500/mata_db?sslmode=disable"
+cache:
+  source: "redis://root:cachesc@localhost:9990/5?protocol=3"
+  age: 3

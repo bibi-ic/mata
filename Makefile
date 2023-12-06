@@ -2,6 +2,10 @@ DB_URL=postgresql://root:hiddensc@localhost:6500/mata_db?sslmode=disable
 
 createdb:
 	docker compose up -d postgres
+
+createcache:
+	docker compose up -d redis
+
 migrateup:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
 
@@ -28,4 +32,4 @@ test:
 server:
 	go run main.go
 
-.PHONY: createdb build-service migrateup migratedown db_docs db_schema sqlc test server
+.PHONY: createdb createcache build-service migrateup migratedown db_docs db_schema sqlc test server

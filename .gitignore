@@ -22,3 +22,6 @@ go.work
 
 # Log file
 *.log
+
+# Redis data
+data/
