@@ -32,4 +32,8 @@ test:
 server:
 	go run main.go
 
-.PHONY: createdb createcache build-service migrateup migratedown db_docs db_schema sqlc test server
+mock:
+	mockgen -package mockdb -destination db/mock/store.go github.com/bibi-ic/mata/db/sqlc Store
+	mockgen -package mockcache -destination cache/mock/cache.go github.com/bibi-ic/mata/cache MataCache
+
+.PHONY: createdb createcache build-service migrateup migratedown db_docs db_schema sqlc test server mock
