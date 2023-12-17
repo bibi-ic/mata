@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bibi-ic/mata/randomutil"
+	"github.com/bibi-ic/mata/internal/randomutil"
 	"github.com/stretchr/testify/require"
 )
 

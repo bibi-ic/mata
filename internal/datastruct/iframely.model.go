@@ -1,11 +1,11 @@
-package model
+package datastruct
 
 import (
-	"encoding/json"
 	"regexp"
 	"strings"
 	"time"
 
+	"github.com/bibi-ic/mata/internal/dto"
 	"golang.org/x/net/html"
 )
 
@@ -26,67 +26,33 @@ type Meta struct {
 	DataIframelyURL bool          `json:"data_iframely_url"`
 }
 
-func (m *Meta) ParseJSON(data []byte) error {
-	type media struct {
-		Width  int `json:"width"`
-		Height int `json:"height"`
-	}
-
-	type thumbnail struct {
-		Href  string `json:"href"`
-		Media media  `json:"media"`
-	}
-	type link struct {
-		Thumbnail []thumbnail `json:"thumbnail"`
-	}
-	type meta struct {
-		Title       string `json:"title"`
-		Author      string `json:"author"`
-		Description string `json:"description"`
-	}
-
-	type iframely struct {
-		URL  string `json:"url"`
-		Meta meta   `json:"meta"`
-		Link link   `json:"links"`
-		HTML string `json:"html"`
-	}
-
-	mt := iframely{}
-	err := json.Unmarshal(data, &mt)
+func (m *Meta) Parse(meta dto.Meta) error {
+	m.providerName(meta.URL)
+	m.youtubeID(meta.URL)
+	ok, err := m.htmlHasIframely(meta.HTML)
 	if err != nil {
 		return err
 	}
 
-	tmp := &Meta{
-		URL:             mt.URL,
-		Type:            "rich",
-		Version:         "1.0",
-		Title:           mt.Meta.Title,
-		Author:          mt.Meta.Author,
-		Description:     mt.Meta.Description,
-		ThumbnailURL:    mt.Link.Thumbnail[0].Href,
-		ThumbnailWidth:  mt.Link.Thumbnail[0].Media.Width,
-		ThumbnailHeight: mt.Link.Thumbnail[0].Media.Height,
-		HTML:            mt.HTML,
-	}
-
-	*m = *tmp
-	m.providerName()
-	m.youtubeID()
-
-	ok, err := m.htmlHasIframely()
-	if err != nil {
-		return err
-	}
 	m.DataIframelyURL = ok
+	m.URL = meta.URL
+	m.Type = "rich"
+	m.Version = "1.0"
+	m.Title = meta.Meta.Title
+	m.Author = meta.Meta.Author
+	m.Description = meta.Meta.Description
+	m.ThumbnailURL = meta.Link.Thumbnail[0].Href
+	m.ThumbnailWidth = meta.Link.Thumbnail[0].Media.Width
+	m.ThumbnailHeight = meta.Link.Thumbnail[0].Media.Height
+	m.HTML = meta.HTML
+
 	return nil
 }
 
-func (m *Meta) providerName() {
+func (m *Meta) providerName(url string) {
 	pat := `(?im)^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)`
 	re := regexp.MustCompile(pat)
-	match := re.FindStringSubmatch(m.URL)
+	match := re.FindStringSubmatch(url)
 
 	for i := range re.SubexpNames() {
 		if i != 0 {
@@ -95,7 +61,7 @@ func (m *Meta) providerName() {
 	}
 }
 
-func (m *Meta) youtubeID() {
+func (m *Meta) youtubeID(string) {
 	pat := `^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*`
 	re := regexp.MustCompile(pat)
 	match := re.FindStringSubmatch(m.URL)
@@ -106,8 +72,8 @@ func (m *Meta) youtubeID() {
 	}
 }
 
-func (m *Meta) htmlHasIframely() (bool, error) {
-	root, err := html.Parse(strings.NewReader(m.HTML))
+func (m *Meta) htmlHasIframely(h string) (bool, error) {
+	root, err := html.Parse(strings.NewReader(h))
 	if err != nil {
 		return false, err
 	}
