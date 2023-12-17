@@ -4,11 +4,13 @@ import (
 	"context"
 	"log"
 
-	"github.com/bibi-ic/mata/cache"
 	"github.com/bibi-ic/mata/config"
-	"github.com/bibi-ic/mata/db/seed"
-	db "github.com/bibi-ic/mata/db/sqlc"
-	"github.com/bibi-ic/mata/server"
+	"github.com/bibi-ic/mata/internal/app"
+	"github.com/bibi-ic/mata/internal/cache"
+	"github.com/bibi-ic/mata/internal/db/seed"
+	db "github.com/bibi-ic/mata/internal/db/sqlc"
+	"github.com/bibi-ic/mata/internal/server"
+	"github.com/bibi-ic/mata/internal/service"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -52,7 +54,14 @@ func main() {
 
 	cache := cache.New(rClient, c.Cache.Age)
 	store := db.NewStore(connPool)
-	s := server.New(c, store, cache)
+
+	// Register service
+	metaService := service.NewMetaService(cache, store)
+
+	// Starting HTTP server
+	s := server.New(c)
+	s.RegisterService(app.NewService(metaService))
+
 	err = s.Start()
 	if err != nil {
 		log.Fatal("can not run server: ", err)

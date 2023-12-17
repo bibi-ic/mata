@@ -7,13 +7,13 @@ createcache:
 	docker compose up -d redis
 
 migrateup:
-	migrate -path db/migration -database "$(DB_URL)" -verbose up
+	migrate -path internal/db/migration -database "$(DB_URL)" -verbose up
 
 migratedown:
-	migrate -path db/migration -database "$(DB_URL)" -verbose down
+	migrate -path internal/db/migration -database "$(DB_URL)" -verbose down
 
 db_docs:
-	dbdocs build doc/db.dbml
+	dbdocs build docs/db.dbml
 
 db_schema:
 	dbml2sql --posgres -o doc/schema.sql doc/db.dbml
@@ -30,10 +30,10 @@ test:
 	go test -v -cover ./...
 
 server:
-	go run main.go
+	go run cmd/main.go
 
 mock:
-	mockgen -package mockdb -destination db/mock/store.go github.com/bibi-ic/mata/db/sqlc Store
-	mockgen -package mockcache -destination cache/mock/cache.go github.com/bibi-ic/mata/cache MataCache
+	mockgen -package mockdb -destination internal/db/mock/store.go github.com/bibi-ic/mata/internal/db/sqlc Store
+	mockgen -package mockcache -destination internal/cache/mock/cache.go github.com/bibi-ic/mata/internal/cache MataCache
 
 .PHONY: createdb createcache build-service migrateup migratedown db_docs db_schema sqlc test server mock
