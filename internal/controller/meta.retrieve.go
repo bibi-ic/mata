@@ -22,7 +22,7 @@ func (m *metaHandler) Retrieve(c *gin.Context, u string) (*models.Meta, status.S
 		}
 	}
 
-	mDto := new(models.Mata)
+	meta := new(models.Meta)
 	metaCached, err := m.cache.Get(c, u)
 	switch {
 	case err == redis.Nil || metaCached == nil:
@@ -42,7 +42,7 @@ func (m *metaHandler) Retrieve(c *gin.Context, u string) (*models.Meta, status.S
 			}
 		}
 
-		err = json.Unmarshal(res, mDto)
+		err = json.Unmarshal(res, meta)
 		if err != nil {
 			return nil, status.Status{
 				Code:  http.StatusUnprocessableEntity,
@@ -50,10 +50,15 @@ func (m *metaHandler) Retrieve(c *gin.Context, u string) (*models.Meta, status.S
 			}
 		}
 
-		meta := new(models.Meta)
-		meta.Parse(*mDto)
+		err = meta.Parse()
+		if err != nil {
+			return nil, status.Status{
+				Code:  http.StatusInternalServerError,
+				Error: err,
+			}
+		}
 
-		err = m.cache.Set(c, mDto.URL, meta)
+		err = m.cache.Set(c, meta.URL, meta)
 		if err != nil {
 			return nil, status.Status{
 				Code:  http.StatusInternalServerError,

@@ -22,15 +22,12 @@ func New(client *redis.Client, exp time.Duration) MataCache {
 }
 
 func (cache *redisCache) Set(ctx context.Context, key string, m *models.Meta) error {
-
-	m.CacheAge = cache.expire * time.Hour
-
 	d, err := json.Marshal(m)
 	if err != nil {
 		return err
 	}
 
-	err = cache.client.Set(ctx, m.URL, d, time.Duration(m.CacheAge)).Err()
+	err = cache.client.Set(ctx, m.URL, d, time.Duration(m.CacheAge/3600*int64(time.Minute))).Err()
 	return err
 }
 
