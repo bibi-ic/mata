@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/bibi-ic/mata/internal/datastruct"
+	"github.com/bibi-ic/mata/internal/models"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -21,7 +21,7 @@ func New(client *redis.Client, exp time.Duration) MataCache {
 	}
 }
 
-func (cache *redisCache) Set(ctx context.Context, key string, m *datastruct.Meta) error {
+func (cache *redisCache) Set(ctx context.Context, key string, m *models.Meta) error {
 
 	m.CacheAge = cache.expire * time.Hour
 
@@ -34,13 +34,13 @@ func (cache *redisCache) Set(ctx context.Context, key string, m *datastruct.Meta
 	return err
 }
 
-func (cache *redisCache) Get(ctx context.Context, key string) (*datastruct.Meta, error) {
+func (cache *redisCache) Get(ctx context.Context, key string) (*models.Meta, error) {
 	d, err := cache.client.Get(ctx, key).Result()
 	if err != nil {
 		return nil, err
 	}
 
-	m := new(datastruct.Meta)
+	m := new(models.Meta)
 	err = json.Unmarshal([]byte(d), m)
 	if err != nil {
 		return nil, err

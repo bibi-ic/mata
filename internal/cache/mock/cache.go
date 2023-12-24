@@ -12,7 +12,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	datastruct "github.com/bibi-ic/mata/internal/datastruct"
+	models "github.com/bibi-ic/mata/internal/models"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -40,10 +40,10 @@ func (m *MockMataCache) EXPECT() *MockMataCacheMockRecorder {
 }
 
 // Get mocks base method.
-func (m *MockMataCache) Get(arg0 context.Context, arg1 string) (*datastruct.Meta, error) {
+func (m *MockMataCache) Get(arg0 context.Context, arg1 string) (*models.Meta, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0, arg1)
-	ret0, _ := ret[0].(*datastruct.Meta)
+	ret0, _ := ret[0].(*models.Meta)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -55,7 +55,7 @@ func (mr *MockMataCacheMockRecorder) Get(arg0, arg1 any) *gomock.Call {
 }
 
 // Set mocks base method.
-func (m *MockMataCache) Set(arg0 context.Context, arg1 string, arg2 *datastruct.Meta) error {
+func (m *MockMataCache) Set(arg0 context.Context, arg1 string, arg2 *models.Meta) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Set", arg0, arg1, arg2)
 	ret0, _ := ret[0].(error)

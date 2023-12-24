@@ -1,36 +1,17 @@
-package service
+package controller
 
 import (
 	"encoding/json"
 	"net/http"
 
 	"github.com/bibi-ic/mata/api"
-	"github.com/bibi-ic/mata/internal/cache"
-	"github.com/bibi-ic/mata/internal/datastruct"
-	db "github.com/bibi-ic/mata/internal/db/sqlc"
-	"github.com/bibi-ic/mata/internal/dto"
+	"github.com/bibi-ic/mata/internal/models"
 	"github.com/bibi-ic/mata/internal/status"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
 )
 
-type MetaService interface {
-	Retrieve(c *gin.Context, u string) (*datastruct.Meta, status.Status)
-}
-
-type metaService struct {
-	cache cache.MataCache
-	store db.Store
-}
-
-func NewMetaService(cache cache.MataCache, store db.Store) MetaService {
-	return &metaService{
-		cache: cache,
-		store: store,
-	}
-}
-
-func (m *metaService) Retrieve(c *gin.Context, u string) (*datastruct.Meta, status.Status) {
+func (m *metaHandler) Retrieve(c *gin.Context, u string) (*models.Meta, status.Status) {
 	var err error
 
 	key, err := m.store.GetAPITx(c)
@@ -41,7 +22,7 @@ func (m *metaService) Retrieve(c *gin.Context, u string) (*datastruct.Meta, stat
 		}
 	}
 
-	mDto := new(dto.Meta)
+	mDto := new(models.Mata)
 	metaCached, err := m.cache.Get(c, u)
 	switch {
 	case err == redis.Nil || metaCached == nil:
@@ -69,7 +50,7 @@ func (m *metaService) Retrieve(c *gin.Context, u string) (*datastruct.Meta, stat
 			}
 		}
 
-		meta := new(datastruct.Meta)
+		meta := new(models.Meta)
 		meta.Parse(*mDto)
 
 		err = m.cache.Set(c, mDto.URL, meta)

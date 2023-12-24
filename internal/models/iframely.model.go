@@ -1,11 +1,10 @@
-package datastruct
+package models
 
 import (
 	"regexp"
 	"strings"
 	"time"
 
-	"github.com/bibi-ic/mata/internal/dto"
 	"golang.org/x/net/html"
 )
 
@@ -26,7 +25,7 @@ type Meta struct {
 	DataIframelyURL bool          `json:"data_iframely_url"`
 }
 
-func (m *Meta) Parse(meta dto.Meta) error {
+func (m *Meta) Parse(meta Mata) error {
 	m.providerName(meta.URL)
 	m.youtubeID(meta.URL)
 	ok, err := m.htmlHasIframely(meta.HTML)

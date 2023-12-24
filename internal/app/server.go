@@ -1,4 +1,4 @@
-package server
+package app
 
 import (
 	"net/http"
@@ -12,7 +12,7 @@ type Server struct {
 	router *gin.Engine
 }
 
-func New(cfg config.Config) *Server {
+func NewServer(cfg config.Config) *Server {
 	s := &Server{
 		config: cfg,
 	}

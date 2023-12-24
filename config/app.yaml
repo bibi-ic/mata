@@ -5,8 +5,8 @@ http:
 api:
   # Key Get from IFramely Account, more info: https://iframely.com/docs/allow-origins#public-client-access
   key:
-    - "key1"
-    - "key2"
+    - "1972f55e8418132ff533420567c0e4c2"
+    - "6f620ba1768066988d35bdcde3064460"
 db:
   source: "postgresql://root:hiddensc@localhost:6500/mata_db?sslmode=disable"
 cache:
