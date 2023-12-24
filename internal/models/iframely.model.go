@@ -3,61 +3,36 @@ package models
 import (
 	"regexp"
 	"strings"
-	"time"
 
 	"golang.org/x/net/html"
 )
 
 type Meta struct {
-	URL             string        `json:"url"`
-	Type            string        `json:"type"`
-	Version         string        `json:"version"`
-	Title           string        `json:"title"`
-	Author          string        `json:"author"`
-	ProviderName    string        `json:"provider_name"`
-	Description     string        `json:"description"`
-	YouTubeID       string        `json:"youtube_video_id,omitempty"`
-	ThumbnailURL    string        `json:"thumbnail_url"`
-	ThumbnailWidth  int           `json:"thumbnail_width"`
-	ThumbnailHeight int           `json:"thumbnail_height"`
-	HTML            string        `json:"html"`
-	CacheAge        time.Duration `json:"cache_age"`
-	DataIframelyURL bool          `json:"data_iframely_url"`
+	URL             string `json:"url"`
+	Type            string `json:"type"`
+	Version         string `json:"version"`
+	Title           string `json:"title"`
+	Author          string `json:"author"`
+	ProviderName    string `json:"provider_name"`
+	Description     string `json:"description"`
+	YouTubeID       string `json:"youtube_video_id,omitempty"`
+	ThumbnailURL    string `json:"thumbnail_url"`
+	ThumbnailWidth  int    `json:"thumbnail_width"`
+	ThumbnailHeight int    `json:"thumbnail_height"`
+	HTML            string `json:"html"`
+	CacheAge        int64  `json:"cache_age"`
+	DataIframelyURL bool   `json:"data_iframely_url"`
 }
 
-func (m *Meta) Parse(meta Mata) error {
-	m.providerName(meta.URL)
-	m.youtubeID(meta.URL)
-	ok, err := m.htmlHasIframely(meta.HTML)
+func (m *Meta) Parse() error {
+	m.youtubeID(m.URL)
+	ok, err := m.htmlHasIframely(m.HTML)
 	if err != nil {
 		return err
 	}
 
 	m.DataIframelyURL = ok
-	m.URL = meta.URL
-	m.Type = "rich"
-	m.Version = "1.0"
-	m.Title = meta.Meta.Title
-	m.Author = meta.Meta.Author
-	m.Description = meta.Meta.Description
-	m.ThumbnailURL = meta.Link.Thumbnail[0].Href
-	m.ThumbnailWidth = meta.Link.Thumbnail[0].Media.Width
-	m.ThumbnailHeight = meta.Link.Thumbnail[0].Media.Height
-	m.HTML = meta.HTML
-
 	return nil
-}
-
-func (m *Meta) providerName(url string) {
-	pat := `(?im)^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)`
-	re := regexp.MustCompile(pat)
-	match := re.FindStringSubmatch(url)
-
-	for i := range re.SubexpNames() {
-		if i != 0 {
-			m.ProviderName = match[i]
-		}
-	}
 }
 
 func (m *Meta) youtubeID(string) {

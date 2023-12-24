@@ -8,7 +8,7 @@ import (
 // NewIframelyRequest generate an API call to 3rd Iframely for fetching meta from link given
 func NewIframelyRequest(url, key string) (*http.Request, error) {
 	scheme := "https://"
-	u := scheme + "iframe.ly/api/iframely"
+	u := scheme + "iframe.ly/api/oembed"
 	req, err := http.NewRequest("GET", u, nil)
 	if err != nil {
 		return nil, err
