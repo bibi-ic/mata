@@ -1,6 +1,6 @@
-package dto
+package models
 
-type Meta struct {
+type Mata struct {
 	URL  string `json:"url"`
 	Meta meta   `json:"meta"`
 	Link link   `json:"links"`
