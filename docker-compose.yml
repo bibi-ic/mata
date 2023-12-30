@@ -29,5 +29,18 @@ services:
       - ./data:/data
       - ./config/redis.conf:/usr/local/etc/redis/redis.conf
 
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DEPLOY=PRODUCT
+    depends_on:
+      - postgres
+      - redis
+    restart: on-failure
+    ports:
+      - "8080:8080"
+
 volumes:
   postgres:

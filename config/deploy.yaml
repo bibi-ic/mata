@@ -1,0 +1,18 @@
+---
+http:
+  address: 0.0.0.0
+  port: 8080
+api:
+  # Key Get from IFramely Account, more info: https://iframely.com/docs/allow-origins#public-client-access
+  # can set more than one key
+  key:
+    - "key1"
+    - "key2"
+    - "key3"
+db:
+  source: "postgresql://root:hiddensc@postgres:5432/mata_db?sslmode=disable"
+cache:
+  source: "redis://root:cachesc@redis:6379/5?protocol=3"
+  age: 3
+
+migration_url: file://internal/db/migration
