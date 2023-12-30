@@ -67,7 +67,7 @@ func (m *metaHandler) Retrieve(c *gin.Context, u string) (*models.Meta, status.S
 		}
 
 		return meta, status.Status{
-			Code:  http.StatusOK,
+			Code:  http.StatusCreated,
 			Error: nil,
 		}
 
