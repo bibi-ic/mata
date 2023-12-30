@@ -1,0 +1,21 @@
+# Go vendor
+vendor/
+
+# Go workspace file
+go.work
+
+# Log file
+*.log
+
+# Redis data
+data/
+
+#docs
+docs/
+
+#Makefile
+Makefile
+
+#Docker
+Dockerfile*
+docker-compose*

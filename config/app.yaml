@@ -4,6 +4,7 @@ http:
   port: 8080
 api:
   # Key Get from IFramely Account, more info: https://iframely.com/docs/allow-origins#public-client-access
+  # Example
   key:
     - "1972f55e8418132ff533420567c0e4c2"
     - "6f620ba1768066988d35bdcde3064460"

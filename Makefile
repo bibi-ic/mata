@@ -36,4 +36,10 @@ mock:
 	mockgen -package mockdb -destination internal/db/mock/store.go github.com/bibi-ic/mata/internal/db/sqlc Store
 	mockgen -package mockcache -destination internal/cache/mock/cache.go github.com/bibi-ic/mata/internal/cache MataCache
 
-.PHONY: createdb createcache build-service migrateup migratedown db_docs db_schema sqlc test server mock
+dockerize:
+	docker compose down
+	docker compose --progress plain build --no-cache api
+	docker compose up -d --force-recreate
+	docker system prune -f
+
+.PHONY: createdb createcache build-service migrateup migratedown db_docs db_schema sqlc test server mock dockerize

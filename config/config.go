@@ -1,6 +1,7 @@
 package config
 
 import (
+	"os"
 	"path/filepath"
 	"runtime"
 	"time"
@@ -42,7 +43,11 @@ var (
 
 // Load config from input file (yaml)
 func Load() (c Config, err error) {
-	viper.SetConfigName("app")
+	if os.Getenv("DEPLOY") == "PRODUCT" {
+		viper.SetConfigName("deploy")
+	} else {
+		viper.SetConfigName("app")
+	}
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(basepath)
 
