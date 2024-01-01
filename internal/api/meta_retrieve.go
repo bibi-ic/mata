@@ -2,7 +2,6 @@ package api
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 
 	"github.com/bibi-ic/mata/internal/external"
@@ -12,14 +11,6 @@ import (
 
 	gourl "net/url"
 )
-
-var (
-	ErrInvalidLink = errors.New("link is invalid")
-)
-
-func errorResponse(err error) gin.H {
-	return gin.H{"error": err.Error()}
-}
 
 func (m *Server) Retrieve(c *gin.Context) {
 	u := c.Query("url")
@@ -31,7 +22,7 @@ func (m *Server) Retrieve(c *gin.Context) {
 
 	key, err := m.store.GetAPITx(c)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
@@ -41,31 +32,31 @@ func (m *Server) Retrieve(c *gin.Context) {
 	case err == redis.Nil || metaCached == nil:
 		r, err := external.NewIframelyRequest(u, key)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse(err))
 			return
 		}
 
 		res, err := external.IframelyResponse(r)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse(err))
 			return
 		}
 
 		err = json.Unmarshal(res, meta)
 		if err != nil {
-			c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, errorResponse(err))
 			return
 		}
 
 		err = meta.Parse()
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse(err))
 			return
 		}
 
 		err = m.cache.Set(c, meta.URL, meta)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse(err))
 			return
 		}
 
@@ -73,7 +64,7 @@ func (m *Server) Retrieve(c *gin.Context) {
 		return
 
 	case err != nil:
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 	c.JSON(http.StatusOK, metaCached)
