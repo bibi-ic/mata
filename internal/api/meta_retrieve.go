@@ -69,12 +69,12 @@ func (m *Server) Retrieve(c *gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusCreated, gin.H{"msg": "ok"})
+		c.JSON(http.StatusCreated, meta)
 		return
 
 	case err != nil:
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"msg": "ok"})
+	c.JSON(http.StatusOK, metaCached)
 }
