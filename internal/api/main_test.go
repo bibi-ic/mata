@@ -7,8 +7,17 @@ import (
 	"os"
 	"testing"
 
+	"github.com/bibi-ic/mata/internal/cache"
+	db "github.com/bibi-ic/mata/internal/db/sqlc"
 	"github.com/gin-gonic/gin"
 )
+
+func newTestServer(t *testing.T, store db.Store, cache cache.Cache) *Server {
+	return &Server{
+		store: store,
+		cache: cache,
+	}
+}
 
 func TestMain(m *testing.M) {
 	gin.SetMode(gin.TestMode)
