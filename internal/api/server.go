@@ -49,7 +49,6 @@ func NewServer(cfg config.Config) *Server {
 	if err != nil {
 		log.Fatal("cannot connect to redis: ", err)
 	}
-	defer rClient.Close()
 
 	cache := cache.New(rClient, cfg.Cache.Age)
 	store := db.NewStore(connPool)
@@ -68,7 +67,7 @@ func (s *Server) setUpRoutes() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
-	s.router.POST("/meta", s.Retrieve)
+	router.POST("/meta", s.Retrieve)
 
 	s.router = router
 }
