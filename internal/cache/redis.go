@@ -14,7 +14,7 @@ type redisCache struct {
 	expire time.Duration
 }
 
-func New(client *redis.Client, exp time.Duration) MataCache {
+func New(client *redis.Client, exp time.Duration) Cache {
 	return &redisCache{
 		client: client,
 		expire: exp,

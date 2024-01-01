@@ -4,12 +4,12 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bibi-ic/mata/internal/randomutil"
+	"github.com/bibi-ic/mata/internal/utils"
 	"github.com/stretchr/testify/require"
 )
 
 func createRandomAPI(t *testing.T) Api {
-	arg := randomutil.RandKey()
+	arg := utils.RandKey()
 
 	api, err := testStore.CreateAPI(context.Background(), arg)
 
