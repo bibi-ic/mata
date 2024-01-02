@@ -34,7 +34,7 @@ server:
 
 mock:
 	mockgen -package mockdb -destination internal/db/mock/store.go github.com/bibi-ic/mata/internal/db/sqlc Store
-	mockgen -package mockcache -destination internal/cache/mock/cache.go github.com/bibi-ic/mata/internal/cache MataCache
+	mockgen -package mockcache -destination internal/cache/mock/cache.go github.com/bibi-ic/mata/internal/cache Cache
 
 dockerize:
 	docker compose down

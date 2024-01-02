@@ -22,12 +22,9 @@ func New(client *redis.Client, exp time.Duration) Cache {
 }
 
 func (cache *redisCache) Set(ctx context.Context, key string, m *models.Meta) error {
-	d, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
+	d, _ := json.Marshal(*m)
 
-	err = cache.client.Set(ctx, m.URL, d, time.Duration(m.CacheAge/3600*int64(time.Minute))).Err()
+	err := cache.client.Set(ctx, m.URL, d, time.Duration(m.CacheAge/3600*int64(time.Minute))).Err()
 	return err
 }
 
