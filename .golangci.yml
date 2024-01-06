@@ -1,0 +1,65 @@
+# Options for analysis running.
+run:
+  # Number of CPUs to use when running golangci-lint.
+  # Default: the number of logical CPUs in the machine
+  concurrency: 4
+  # Timeout for analysis, e.g. 30s, 5m.
+  # Default: 1m
+  timeout: 5m
+  # Exit code when at least one issue was found.
+  # Default: 1
+  issues-exit-code: 2
+  # Include test files or not.
+  # Default: true
+  tests: false
+
+# output configuration options
+output:
+  # Sort results by: filepath, line and column.
+  # Default: false
+  sort-results: true
+
+linters-settings:
+  errcheck:
+    exclude-functions:
+      - encoding/json.Marshal
+      - encoding/json.MarshalIndent
+
+  errchkjson:
+    check-error-free-encoding: true
+
+  exhaustive:
+    check:
+      - switch
+      - map
+
+  gocognit:
+    min-complexity: 20
+
+linters:
+  # Enable specific linter
+  # https://golangci-lint.run/usage/linters/#enabled-by-default
+  enable:
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - dogsled
+    - dupl
+    - durationcheck
+    - errchkjson
+    - errname
+    - exhaustive
+    - exportloopref
+    - gocognit
+    - goconst
+    - gocritic
+    - gosec
+    - nilnil
+    - noctx
+    - prealloc
+    - predeclared
+    - thelper
+    - tparallel
+    - unconvert
