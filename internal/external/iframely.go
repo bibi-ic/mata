@@ -1,6 +1,7 @@
 package external
 
 import (
+	"context"
 	"io"
 	"net/http"
 )
@@ -9,7 +10,9 @@ import (
 func NewIframelyRequest(url, key string) (*http.Request, error) {
 	scheme := "https://"
 	u := scheme + "iframe.ly/api/oembed"
-	req, err := http.NewRequest("GET", u, nil)
+
+	ctx := context.Background()
+	req, err := http.NewRequestWithContext(ctx, "GET", u, nil)
 	if err != nil {
 		return nil, err
 	}

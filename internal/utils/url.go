@@ -29,5 +29,5 @@ func RandURL() string {
 		urls = append(urls, sc.Text())
 	}
 
-	return urls[rand.Intn(len(urls))]
+	return urls[rand.Intn(len(urls))] //nolint:gosec // for faster performance
 }
