@@ -12,7 +12,7 @@ func RandString(n int) string {
 	k := len(charset)
 
 	for i := 0; i < n; i++ {
-		c := charset[rand.Intn(k)]
+		c := charset[rand.Intn(k)] //nolint:gosec // for faster performance
 		sb.WriteByte(c)
 	}
 	return sb.String()
