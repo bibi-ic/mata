@@ -1,10 +1,12 @@
 FROM golang:1.21 as builder
 ENV DEPLOY=PRODUCT
 WORKDIR /runtime
+
+COPY go.mod go.sum ./
+RUN go mod download && go mod verify
 COPY . .
 
-RUN go mod download
-RUN CGO_ENABLED=0 go build -o /go/bin/app ./cmd
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/bin/app ./cmd
 
 FROM gcr.io/distroless/static-debian11
 
