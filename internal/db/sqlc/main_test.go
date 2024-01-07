@@ -6,22 +6,31 @@ import (
 	"os"
 	"testing"
 
-	"github.com/bibi-ic/mata/config"
+	testhelpers "github.com/bibi-ic/mata/test/helper"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 var testStore Store
 
 func TestMain(m *testing.M) {
-	c, err := config.Load()
+	// Setup Suite
+	ctx := context.Background()
+	pgSuit, err := testhelpers.NewPostgresContainer(ctx)
 	if err != nil {
-		log.Fatal("cannot load config: ", err)
+		log.Fatal("error cannot create postgres container: ", err)
 	}
-	connPool, err := pgxpool.New(context.Background(), c.DB.Source)
+
+	connPool, err := pgxpool.New(ctx, pgSuit.ConnectionString)
 	if err != nil {
 		log.Fatal("cannot connect to db: ", err)
 	}
 
 	testStore = NewStore(connPool)
-	os.Exit(m.Run())
+
+	code := m.Run()
+
+	// Teardown Suite
+	pgSuit.Drop(ctx)
+
+	os.Exit(code)
 }

@@ -12,21 +12,6 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:16.1-alpine
-        env:
-          POSTGRES_USER: root
-          POSTGRES_PASSWORD: hiddensc
-          POSTGRES_DB: mata_db
-        ports:
-          - 6500:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
 
     - name: Set up Go 1.x
