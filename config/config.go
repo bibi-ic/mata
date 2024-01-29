@@ -26,6 +26,9 @@ type Cache struct {
 	Source string        `mapstructure:"source"`
 	Age    time.Duration `mapstructure:"age"`
 }
+type Jaeger struct {
+	Source string `mapstructure:"source"`
+}
 
 // Config struct base from structure's config file
 type Config struct {
@@ -34,6 +37,7 @@ type Config struct {
 	DB           DB     `mapstructure:"db"`
 	MigrationURL string `mapstructure:"migration_url"`
 	Cache        Cache  `mapstructure:"cache"`
+	Jaeger       Jaeger `mapstructure:"jaeger"`
 }
 
 var (
