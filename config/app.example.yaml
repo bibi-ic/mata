@@ -1,0 +1,21 @@
+---
+http:
+  address:
+  port:
+api:
+  # Key Get from IFramely Account, more info: https://iframely.com/docs/allow-origins#public-client-access
+  # Example
+  key:
+    - "key1"
+    - "key2"
+    - "key3"
+db:
+  source: "string"
+cache:
+  source: "string"
+  age: 3
+
+jaeger:
+  source: "string"
+
+migration_url: file://internal/db/migration

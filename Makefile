@@ -42,4 +42,7 @@ dockerize:
 	docker compose up -d --force-recreate
 	docker system prune -f
 
-.PHONY: createdb createcache build-service migrateup migratedown db_docs db_schema sqlc test server mock dockerize
+lint:
+	golangci-lint run ./...
+
+.PHONY: createdb createcache build-service migrateup migratedown db_docs db_schema sqlc test server mock dockerize lint

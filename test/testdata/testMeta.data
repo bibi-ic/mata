@@ -1,0 +1,113 @@
+[
+    {
+        "url": "https://www.google.com",
+        "type": "rich",
+        "version": "1.0",
+        "title": "Google",
+        "provider_name": "Google",
+        "description": "Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.",
+        "html": "<div class=\"iframely-embed\"><div class=\"iframely-responsive\" style=\"height: 140px; padding-bottom: 0;\"><a href=\"https://www.google.com\" data-iframely-url=\"//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fwww.google.com&key=73b63ed6964219dbe3f0f86692824f3d\"></a></div></div><script async src=\"//cdn.iframe.ly/embed.js\" charset=\"utf-8\"></script>",
+        "cache_age": 86400
+    },
+    {
+        "url": "https://www.youtube.com/watch?v=OPgrCFV_7QQ",
+        "type": "video",
+        "version": "1.0",
+        "title": "1 Hour Perfect Loop - Hello World by Louie Zong",
+        "author": "JR O1",
+        "author_url": "https://www.youtube.com/channel/UCDrsrXkOnk1_Lf0GxLPkxSw",
+        "provider_name": "YouTube",
+        "description": "As a Tech enthusiast, I just really love this song.\n\nIt started appearing in my playlist more this year, and even getting to a point where I wired a room with only just this song on repeat. Surprisingly, there wasn't really anything close to 1-hour perfect loops, so here's my own edit of the 1-hour perfect loop for \"Hello World\". Also, the loop is a little visual, but I was only focusing on getting a good loop with the audio. In the seamless loop version, I could hear where the audio loops.\n\nAlso, support the original work by Louie Zong:\nhttps://www.youtube.com/watch?v=Yw6u6YkTgQ4\n\nHe also has some other nice stuff on his channel as well!\nhttps://www.youtube.com/c/everydaylouie",
+        "thumbnail_url": "https://i.ytimg.com/vi/OPgrCFV_7QQ/maxresdefault.jpg",
+        "thumbnail_width": 1280,
+        "thumbnail_height": 720,
+        "html": "<div style=\"left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;\"><iframe src=\"https://www.youtube.com/embed/OPgrCFV_7QQ?rel=0\" style=\"top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;\" allowfullscreen scrolling=\"no\" allow=\"accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;\"></iframe></div>",
+        "cache_age": 86400,
+        "options": {
+            "_start": {
+                "label": "Start from",
+                "value": "",
+                "placeholder": "ex.: 11, 1m10s"
+            },
+            "_end": {
+                "label": "End on",
+                "value": "",
+                "placeholder": "ex.: 11, 1m10s"
+            },
+            "_cc_load_policy": {
+                "label": "Closed captions",
+                "value": false
+            },
+            "click_to_play": {
+                "label": "Hold load & play until clicked",
+                "value": false
+            }
+        }
+    },
+    {
+        "url": "https://www.nytimes.com/2023/12/08/well/live/sober-holiday-alcohol-free.html",
+        "type": "rich",
+        "version": "1.0",
+        "title": "4 Tips for Booze-Free Holiday Fun",
+        "author": "By Alisha Haridasani Gupta",
+        "author_url": "https://www.nytimes.com/by/alisha-haridasani-gupta",
+        "provider_name": "The New York Times",
+        "description": "Set yourself up for all the merriment and none of the hangovers.",
+        "thumbnail_url": "https://static01.nyt.com/images/2023/12/08/well/08WELLNL-HOLIDAYS-NO-ALCOHOL/08WELLNL-HOLIDAYS-NO-ALCOHOL-videoSixteenByNine3000.jpg",
+        "thumbnail_width": 3000,
+        "thumbnail_height": 1688,
+        "html": "<iframe src=\"https://www.nytimes.com/svc/oembed/html/?url=https%3A%2F%2Fwww.nytimes.com%2F2023%2F12%2F08%2Fwell%2Flive%2Fsober-holiday-alcohol-free.html\" scrolling=\"no\" frameborder=\"0\" allowtransparency=\"true\" title=\"4 Tips for Booze-Free Holiday Fun\" style=\"border:none;max-width:500px;min-width:300px;min-height:550px;display:block;width:100%;\"></iframe>",
+        "cache_age": 86400,
+        "options": {
+            "media": {
+                "value": "",
+                "values": {
+                    "0": "Iframely card instead of branded one from publisher"
+                }
+            }
+        }
+    },
+    {
+        "url": "https://vnexpress.net/cai-tao-can-ho-su-dung-10-nam-chi-phi-225-trieu-dong-4686421.html",
+        "type": "rich",
+        "version": "1.0",
+        "title": "Cải tạo căn hộ sử dụng 10 năm, chi phí 225 triệu đồng",
+        "author": "VnExpress",
+        "provider_name": "VnExpress",
+        "description": "Hà Nội- Ngoài chỉnh sửa phần thô, khắc phục các hạng mục xuống cấp, căn hộ được hoàn thiện theo phong cách Japandi để tối ưu chi phí.",
+        "thumbnail_url": "https://vcdn1-vnexpress.vnecdn.net/2023/12/08/x3-1702009421-1702023478.jpg?w=900&h=540&q=100&dpr=1&fit=crop&s=dqdopfpTmPojINyk3k_gBw",
+        "thumbnail_width": 900,
+        "thumbnail_height": 540,
+        "html": "<div class=\"iframely-embed\"><div class=\"iframely-responsive\" style=\"padding-bottom: 60%; padding-top: 120px;\"><a href=\"https://vnexpress.net/cai-tao-can-ho-su-dung-10-nam-chi-phi-225-trieu-dong-4686421.html\" data-iframely-url=\"//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fvnexpress.net%2Fcai-tao-can-ho-su-dung-10-nam-chi-phi-225-trieu-dong-4686421.html&key=73b63ed6964219dbe3f0f86692824f3d\"></a></div></div><script async src=\"//cdn.iframe.ly/embed.js\" charset=\"utf-8\"></script>",
+        "cache_age": 86400,
+        "options": {
+            "card": {
+                "value": "",
+                "values": {
+                    "small": "Make it a small card"
+                }
+            }
+        }
+    },
+    {
+        "url": "https://gizmodo.com/browser-hidden-setting-speed-chrome-safari-edge-1851075674",
+        "type": "rich",
+        "version": "1.0",
+        "title": "Your Browser Has a Hidden Setting That Will Speed Up the Web",
+        "provider_name": "Gizmodo",
+        "description": "Switch this on in your browser if it isn't already enabled.",
+        "thumbnail_url": "https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/298ee758cc4cc57a0b5fa68f9a006371.jpg",
+        "thumbnail_width": 1200,
+        "thumbnail_height": 675,
+        "html": "<div class=\"iframely-embed\"><div class=\"iframely-responsive\" style=\"padding-bottom: 56.25%; padding-top: 120px;\"><a href=\"https://gizmodo.com/browser-hidden-setting-speed-chrome-safari-edge-1851075674\" data-iframely-url=\"//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fgizmodo.com%2Fbrowser-hidden-setting-speed-chrome-safari-edge-1851075674&key=73b63ed6964219dbe3f0f86692824f3d\"></a></div></div><script async src=\"//cdn.iframe.ly/embed.js\" charset=\"utf-8\"></script>",
+        "cache_age": 86400,
+        "options": {
+            "card": {
+                "value": "",
+                "values": {
+                    "small": "Make it a small card"
+                }
+            }
+        }
+    }
+]
