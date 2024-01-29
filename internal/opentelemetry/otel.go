@@ -11,7 +11,6 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.24.0"
-	oteltrace "go.opentelemetry.io/otel/trace"
 )
 
 const (
@@ -19,17 +18,13 @@ const (
 	environment = "development"
 )
 
-var tracer oteltrace.Tracer
-
 func SetupOtelSDK(ctx context.Context, exporterURL string) (shutdown func(context.Context) error, err error) {
 	var shutdownFunc func(context.Context) error
 
 	// shutdown calls cleanup function registered via shutdownFunc.
 	// registered cleanup will be invoked once.
 	shutdown = func(ctx context.Context) error {
-		var err error
-
-		err = shutdownFunc(ctx)
+		var err = shutdownFunc(ctx)
 		shutdownFunc = nil
 
 		return err
