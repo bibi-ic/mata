@@ -73,7 +73,7 @@ func (m *Server) Retrieve(c *gin.Context) {
 			return
 		}
 
-		err = m.cache.Set(c, meta.URL, meta)
+		err = m.cache.Set(c, u, meta)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse(err))
 			return
