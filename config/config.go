@@ -1,6 +1,7 @@
 package config
 
 import (
+	"io/fs"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -38,6 +39,7 @@ type Config struct {
 	MigrationURL string `mapstructure:"migration_url"`
 	Cache        Cache  `mapstructure:"cache"`
 	Jaeger       Jaeger `mapstructure:"jaeger"`
+	TemplateFS   fs.FS
 }
 
 var (
@@ -62,4 +64,8 @@ func Load() (c Config, err error) {
 
 	err = viper.Unmarshal(&c)
 	return
+}
+
+func (c *Config) InsertFS(input fs.FS) {
+	c.TemplateFS = input
 }

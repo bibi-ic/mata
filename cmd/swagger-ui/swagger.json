@@ -1,0 +1,135 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Mata",
+    "description": "This is a simple API getting metadata from any URLs website",
+    "contact": {
+      "email": "manhbui171999@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/bibi-ic/mata/blob/main/LICENSE"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Internal server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "matas",
+      "description": "Mata calls"
+    }
+  ],
+  "paths": {
+    "/meta": {
+      "post": {
+        "tags": [
+          "matas"
+        ],
+        "summary": "get metadatas",
+        "description": "get metadata from specific given URL\n",
+        "operationId": "getMetadata",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "description": "given URL encoded",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "found cached metadata with given URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meta"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "caching metadata success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meta"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Meta": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "https://vnexpress.net/khu-vuc-lu-quet-o-ha-noi-co-nhieu-cong-trinh-xay-trai-phep-4638945.html"
+          },
+          "type": {
+            "type": "string",
+            "example": "rich"
+          },
+          "version": {
+            "type": "string",
+            "example": "1.0"
+          },
+          "title": {
+            "type": "string",
+            "example": "Khu vực lũ quét ở Hà Nội có nhiều công trình xây trái phép"
+          },
+          "author": {
+            "type": "string",
+            "example": "VnExpress"
+          },
+          "provider_name": {
+            "type": "string",
+            "example": "VnExpress"
+          },
+          "description": {
+            "type": "string",
+            "example": "Lãnh đạo huyện Sóc Sơn cho hay con đường bêtông và một số công trình xây dựng ở xóm Ban Tiện, nơi xảy ra lũ quét vùi nhiều ôtô, được xây dựng trái phép."
+          },
+          "thumbnail_url": {
+            "type": "string",
+            "example": "https://vcdn1-vnexpress.vnecdn.net/2023/08/07/toancanh-1691420699-5304-1691420843.jpg?w=900&h=540&q=100&dpr=1&fit=crop&s=QfTXW17vuwV8KNqH6UlC8g"
+          },
+          "thumbnail_width": {
+            "type": "integer",
+            "example": 900
+          },
+          "thumbnail_height": {
+            "type": "integer",
+            "example": 540
+          },
+          "html": {
+            "type": "string",
+            "example": "<div class=\\\"iframely-embed\\\"><div class=\\\"iframely-responsive\\\" style=\\\"padding-bottom: 60%; padding-top: 120px;\\\"><a href=\\\"https://vnexpress.net/khu-vuc-lu-quet-o-ha-noi-co-nhieu-cong-trinh-xay-trai-phep-4638945.html\\\" data-iframely-url=\\\"//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fvnexpress.net%2Fkhu-vuc-lu-quet-o-ha-noi-co-nhieu-cong-trinh-xay-trai-phep-4638945.html&key=b87e80debcd09a645fde5163c4a471c5\\\"></a></div></div><script async src=\\\"//cdn.iframe.ly/embed.js\\\" charset=\\\"utf-8\\\"></script>\n"
+          },
+          "cache_age": {
+            "type": "integer",
+            "example": 86400
+          },
+          "data_iframely_url": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      }
+    }
+  }
+}
