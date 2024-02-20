@@ -1,6 +1,8 @@
 package main
 
 import (
+	"embed"
+	"io/fs"
 	"log"
 
 	"github.com/bibi-ic/mata/config"
@@ -9,11 +11,20 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
+//go:embed all:swagger-ui
+var templateFS embed.FS
+
 func main() {
 	c, err := config.Load()
 	if err != nil {
 		log.Fatal("cannot load config: ", err)
 	}
+
+	staticFile, err := fs.Sub(templateFS, "swagger-ui")
+	if err != nil {
+		log.Fatal("cannot load static swagger: ", err)
+	}
+	c.InsertFS(staticFile)
 
 	s := api.NewServer(c)
 	err = s.Start()

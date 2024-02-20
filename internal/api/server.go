@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io/fs"
 	"log"
 	"net/http"
 	"os/signal"
@@ -23,10 +24,11 @@ import (
 )
 
 type Server struct {
-	config config.Config
-	router *gin.Engine
-	cache  cache.Cache
-	store  db.Store
+	config     config.Config
+	router     *gin.Engine
+	cache      cache.Cache
+	store      db.Store
+	templateFS fs.FS
 }
 
 func NewServer(cfg config.Config) *Server {
@@ -62,9 +64,10 @@ func NewServer(cfg config.Config) *Server {
 	store := db.NewStore(connPool)
 
 	s := &Server{
-		config: cfg,
-		cache:  cache,
-		store:  store,
+		config:     cfg,
+		cache:      cache,
+		store:      store,
+		templateFS: cfg.TemplateFS,
 	}
 	s.setUpRoutes()
 	return s
@@ -76,6 +79,7 @@ func (s *Server) setUpRoutes() {
 	router.Use(gin.Recovery())
 	router.Use(otelgin.Middleware("mata-server"))
 
+	router.StaticFS("/swagger-ui", http.FS(s.templateFS))
 	router.POST("/meta", s.Retrieve)
 
 	s.router = router
